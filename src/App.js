@@ -58,7 +58,7 @@ class App extends Component {
             {this.state.tasks.map((task,index) => <li className = {task.done ? 'done' : null} key={task.id} onClick = {this.toogleDone.bind(this, task.id)}>{task.name}</li>)}
           </ul>
           <form onSubmit={this.addTask.bind(this)}>
-            <input type="text" id="new-task" placeholder="Ingresa una tarea y oprime Enter" value={this.state.newTask} onChange={this.updateTask.bind(this)} />
+            <input className= {this.state.newTask===''?'error':null} type="text" id="new-task" placeholder="Ingresa una tarea y oprime Enter" value={this.state.newTask} onChange={this.updateTask.bind(this)} />
           </form>
         </div>
       </div>
