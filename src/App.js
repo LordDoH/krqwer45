@@ -14,16 +14,51 @@ class App extends Component {
       newTask: ''
     }
   }
+
+  addTask(event){
+    event.preventDefault()
+    let oldTasks = this.state.tasks
+    let newTask = {
+      id : oldTasks.length+1,
+      name : this.state.newTask,
+      done:false
+    }
+    this.setState({
+      tasks : [...oldTasks, newTask],
+      newTask : ''
+    })
+  }
+
+  updateTask(event) {
+    this.setState ({
+      newTask : event.target.value
+    })
+  }
+
+  toogleDone (id,event) {
+    const newTasks = this.state.tasks.map (task => {
+      if (task.id === id) {
+        task.done = !task.done
+        return task
+      }
+      return task
+    })
+    this.setState({
+      task : newTasks
+    })
+  }
+
+
   render() {
     return (
       <div className="wrapper">
         <div className="list">
           <h3>Por hacer:</h3>
           <ul className="todo">
-            {this.state.tasks.map((task, index) => <li key={task.id}>{task.name}</li>)}
+            {this.state.tasks.map((task,index) => <li className = {task.done ? 'done' : null} key={task.id} onClick = {this.toogleDone.bind(this, task.id)}>{task.name}</li>)}
           </ul>
-          <form>
-            <input type="text" id="new-task" placeholder="Ingresa una tarea y oprime Enter" value={this.state.newTask} />
+          <form onSubmit={this.addTask.bind(this)}>
+            <input type="text" id="new-task" placeholder="Ingresa una tarea y oprime Enter" value={this.state.newTask} onChange={this.updateTask.bind(this)} />
           </form>
         </div>
       </div>
